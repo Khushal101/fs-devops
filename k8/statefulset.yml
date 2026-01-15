@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: fsl-app
+  namespace: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fsl-app
+  template:
+    metadata:
+      labels:
+        app: fsl-app
+    spec:
+      containers:
+      - name: fsl-app
+        image: fsl-challenge-app:local
+        ports:
+        - containerPort: 8080
