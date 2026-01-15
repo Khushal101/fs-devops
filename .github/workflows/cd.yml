@@ -49,16 +49,11 @@ jobs:
         run: |
           CLUSTER_NAME="fsl-cluster"
           SERVICE_NAME="fsl-task-service-wy2hrvu8"
-          TASK_DEF="fsl-task"
           IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fsl-challenge:latest
           
-          # Register new task definition
-          aws ecs register-task-definition \
-            --cli-input-json file://ecs-task-definition.json
-
           # Update ECS service to use new image
           aws ecs update-service \
             --cluster $CLUSTER_NAME \
             --service $SERVICE_NAME \
             --force-new-deployment \
-            --image $IMAGE_URI
+            --region ${{ secrets.AWS_REGION }}
